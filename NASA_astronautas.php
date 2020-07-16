@@ -7,7 +7,7 @@
 register_activation_hook(__FILE__,'nasa_aspirante_init');
 
 function nasa_aspirante_init(){
-	global $wpdb; 
+    global $wpdb; 
     $tabla_aspirantes = $wpdb->prefix . 'nasa_form';
     
     $charset_collate = $wpdb->get_charset_collate();
@@ -32,10 +32,10 @@ function nasa_aspirante_init(){
 add_shortcode('nasa_plugin_form','NASA_Plugin_form');
 
 function NASA_Plugin_form(){
-	global $wpdb; 
+    global $wpdb; 
     if (!empty($_POST) AND $_POST['nombre'] != ''
-    	AND wp_verify_nonce($_POST['aspirante_nonce'], 'graba_aspirante')
-		) {
+        AND wp_verify_nonce($_POST['aspirante_nonce'], 'graba_aspirante')
+        ) {
         $tabla_aspirantes = $wpdb->prefix . 'nasa_form'; 
         $nombre = $_POST['nombre'];
         $edad = $_POST['edad'];
@@ -62,52 +62,52 @@ function NASA_Plugin_form(){
     }
 
 
-	ob_start();
-	?>
+    ob_start();
+    ?>
     <h2><?php echo get_option( 'nasa_introduccion' ); ?></h2>
     // <img src="<?php echo get_option( 'nasa_logo' ); ?>" >
-	<form action="<?php get_the_permalink(); ?>" method="post" id="form_aspirante"
+    <form action="<?php get_the_permalink(); ?>" method="post" id="form_aspirante"
       class="cuestionario">
       <?php wp_nonce_field('graba_aspirante', 'aspirante_nonce'); ?>
-		<input type="text" name="nombre" id="nombre" placeholder="Nombre Completo" required>
+        <input type="text" name="nombre" id="nombre" placeholder="Nombre Completo" required>
 
-		<input type="text" name="edad" id="edad" placeholder="Edad" required>
+        <input type="text" name="edad" id="edad" placeholder="Edad" required>
 
-		<select name="sexo" id="sexo" required>
-			<option value="" disabled selected>Sexo</option>
-			<option value="Femenino">Femenino</option>
-			<option value="Masculino">Masculino</option>
-		</select>
+        <select name="sexo" id="sexo" required>
+            <option value="" disabled selected>Sexo</option>
+            <option value="Femenino">Femenino</option>
+            <option value="Masculino">Masculino</option>
+        </select>
 
-		<input type="email" name="correo" id="correo" placeholder="Correo Electrónico." required>
+        <input type="email" name="correo" id="correo" placeholder="Correo Electrónico." required>
 
-		<label>Motivos para ir a la luna</label>
-		<textarea name="motivo" id="motivo" cols="30" rows="10" required></textarea>
+        <label>Motivos para ir a la luna</label>
+        <textarea name="motivo" id="motivo" cols="30" rows="10" required></textarea>
 
-		<label>Última vez que tuvo contacto con extraterrestres.</label>
-		<textarea name="extraterrestre" id="extraterrestre" cols="30" rows="10" required></textarea>
+        <label>Última vez que tuvo contacto con extraterrestres.</label>
+        <textarea name="extraterrestre" id="extraterrestre" cols="30" rows="10" required></textarea>
 
-		<input type="submit" value="Enviar">
-	</form>
+        <input type="submit" value="Enviar">
+    </form>
 
 
-	<?php
-	return ob_get_clean();
+    <?php
+    return ob_get_clean();
 }
 
 
 add_action("admin_menu", "nasa_form_menu");
 
 function nasa_form_menu(){
-	add_menu_page('NASA clientes ', 'NASA clientes ', 'manage_options', 
+    add_menu_page('NASA clientes ', 'NASA clientes ', 'manage_options', 
         'nasa_menu', 'nasa_form_admin', 'dashicons-feedback', 75);
-	add_submenu_page('nasa_menu','Configuración', 'Configuración','manage_options','nasa_menu_configuracion','nasa_form_configuracion');
+    add_submenu_page('nasa_menu','Configuración', 'Configuración','manage_options','nasa_menu_configuracion','nasa_form_configuracion');
 
-	add_submenu_page('nasa_menu','Reporte', 'Reporte','manage_options','nasa_menu_reporte','nasa_form_reporte');
+    add_submenu_page('nasa_menu','Reporte', 'Reporte','manage_options','nasa_menu_reporte','nasa_form_reporte');
 }
 
 function nasa_form_admin(){
-	
+    
 
 }
 function nasa_form_configuracion(){
@@ -121,6 +121,8 @@ function nasa_form_configuracion(){
     }
 
     ?>
+
+    <h3>Se visualiza el formulario agregando el shortcode: "<b style="color: red;">[nasa_plugin_form]</b>"</h3>
 
     <form method='post'>
         <input type='hidden' name='action' value='nasaopciones'>
@@ -168,10 +170,10 @@ function nasa_form_configuracion(){
     <?php
 }
 function nasa_form_reporte(){
-	global $wpdb;
-	$tabla_aspirantes = $wpdb->prefix . 'nasa_form'; 
+    global $wpdb;
+    $tabla_aspirantes = $wpdb->prefix . 'nasa_form'; 
 
-	echo '<div class="wrap"><h1>Lista de datos del formulario</h1>';
+    echo '<div class="wrap"><h1>Lista de datos del formulario</h1>';
     echo '<table class="wp-list-table widefat fixed striped">';
     echo '<thead><tr><th width="30%">Nombre</th><th width="20%">Edad</th>
         <th>Sexo</th><th>Correo Electrónico</th><th>Motivos para ir a la luna</th>
